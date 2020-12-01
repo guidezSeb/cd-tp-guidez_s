@@ -121,10 +121,10 @@ jobs:
       - checkout
       - run:
           name: Heroku Deploy
-          command: echo todo && false
+          command: git push heroku main
       - run:
           name: Smoke Test
-          command: echo todo && false
+          command: ./heroku_test_dep.sh
 
 workflows:
   version: 2
