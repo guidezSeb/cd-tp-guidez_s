@@ -93,26 +93,6 @@ jobs:
             API_PORT: 3000
             API_HOST: localhost
             API_PROTOCOL: http
-
-    working_directory: /dockerapp
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build --cache-from=app -t app .
-      - deploy:
-          name: Publish application to docker hub
-          command: |
-            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
-            docker tag app $DOCKER_HUB_USER_ID/my-awesome-ci-expr:$CIRCLE_BUILD_NUM
-            docker tag app $DOCKER_HUB_USER_ID/my-awesome-ci-expr:latest
-            docker push $DOCKER_HUB_USER_ID/my-awesome-ci-expr:$CIRCLE_BUILD_NUM
-            docker push $DOCKER_HUB_USER_ID/my-awesome-ci-expr:latest
-
   back-deploy-heroku:
     docker:
       - image: buildpack-deps:trusty
