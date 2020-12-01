@@ -54,7 +54,7 @@ jobs:
           at: /tmp
       - run:
           name: Deploy app
-          command: npx netlify-cli deploy --prod --dir build-dir --message "site deployed"  --site 123
+          command: npx netlify-cli deploy --prod --dir /tmp/server-doc --message "site deployed"  --site 4bda46fe-7e34-49c2-856e-b836a7678415
   back-test-unit:
     docker:
       - image: circleci/node:dubnium-browsers
