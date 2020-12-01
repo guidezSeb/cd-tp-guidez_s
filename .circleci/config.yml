@@ -54,7 +54,7 @@ jobs:
           at: /tmp
       - run:
           name: Deploy app
-          command: echo todo && false
+          command: netlify deploy --prod
   back-test-unit:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -94,7 +94,6 @@ jobs:
             API_HOST: localhost
             API_PROTOCOL: http
 
-  docker-build-and-push:
     working_directory: /dockerapp
     docker:
       - image: docker:17.05.0-ce-git
@@ -121,7 +120,7 @@ jobs:
       - checkout
       - run:
           name: Heroku Deploy
-          command: git push heroku main
+          command: git push https://heroku:0c182b29-a735-49f6-a653-913f906d3a39@git.heroku.com/calm-island-54504.git HEAD:main
       - run:
           name: Smoke Test
           command: ./heroku_test_dep.sh
@@ -140,15 +139,6 @@ workflows:
       - lint:
           requires:
             - build
-      - docker-build-and-push:
-          requires:
-            - build
-            - lint
-            - back-test-e2e
-            - back-test-unit
-          filters:
-            branches:
-              only: main
       - back-deploy-heroku:
           requires:
             - build
