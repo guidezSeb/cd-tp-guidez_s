@@ -54,7 +54,7 @@ jobs:
           at: /tmp
       - run:
           name: Deploy app
-          command: npx netlify-cli deploy --prod --dir /tmp/server-doc --message "site deployed"  --site $HEROKU_API_KEY
+          command: npx netlify-cli deploy --prod --dir /tmp/server-doc --message "site deployed"  --site $NETLIFY_ID
   back-test-unit:
     docker:
       - image: circleci/node:dubnium-browsers
@@ -100,7 +100,7 @@ jobs:
       - checkout
       - run:
           name: Heroku Deploy
-          command: git push https://heroku:0c182b29-a735-49f6-a653-913f906d3a39@git.heroku.com/calm-island-54504.git HEAD:main
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:main
       - run:
           name: Smoke Test
           command: ./heroku_test_dep.sh
